@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+  background-color: #000;
+}
+
+.video-slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+.video-container {
+  display: flex;
+  transition: transform 0.8s ease;
+  width: 300%; /* 3 видео по 100% */
+}
+
+.video-container video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
+  transition: transform 0.9s ease-in-out;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background: none;
+  color: #fff;
+  border: none;
+  font-size: 2em;
+  padding: 0.3em 0.6em;
+  cursor: pointer;
+  z-index: 10;
+  user-select: none;
+}
+
+.arrow.prev { left: 10px; }
+.arrow.next { right: 10px; }
+
+@media (max-width: 768px) {
+  .arrow { font-size: 1.5em; }
+}
+.video-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+  z-index: 5;
+}
+
+.video-dots .dot {
+  width: 35px;
+  height: 3px;
+  /* border-radius: 50%; */
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.video-dots .dot.active {
+  background-color: white;
+}
+

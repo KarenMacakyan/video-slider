@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Видео Плейлист</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="video-slider">
+    <button class="arrow prev">←</button>
+
+    <div class="video-container">
+      <video src="videos/video1.mp4" autoplay muted playsinline></video>
+      <video src="videos/video2.mp4" muted playsinline></video>
+      <video src="videos/video3.mp4" muted playsinline></video>
+      <video src="videos/video4.mp4" muted playsinline></video>
+      <video src="videos/video5.mp4" muted playsinline></video>
+    </div>
+
+    <button class="arrow next">→</button>
+
+    <!-- 🔘 Новое: точки под видео -->
+    <div class="video-dots" id="video-dots"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
