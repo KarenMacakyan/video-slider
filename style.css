@@ -1,5 +1,5 @@
 :root {
-  --vh: 100vh; /* Устанавливается через JS */
+  --vh: 100vh;
 }
 
 body {
@@ -19,8 +19,8 @@ body {
 
 .video-container {
   display: flex;
-  transition: transform 0.8s ease;
-  width: 500vw; /* 5 видео по 100% */
+  transition: transform 1.5s ease;
+  width: 500vw;
   height: 100%;
 }
 
@@ -32,12 +32,11 @@ body {
   display: block;
 }
 
-/* Стрелки */
 .arrow {
   position: absolute;
   transform: translateY(-50%);
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   background: none;
   border: none;
   cursor: pointer;
@@ -53,7 +52,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: brightness(0) invert(1); /* делает чёрную иконку — белой */
+  filter: brightness(0) invert(1);
   transition: transform 0.3s ease;
 }
 
@@ -62,35 +61,18 @@ body {
 }
 
 .arrow.prev {
-  left: 10px;
+  left: 50px;
   top: 50%;
 }
 
 .arrow.next {
-  right: 10px;
+  right: 50px;
   top: 50%;
 }
 
-/* Стрелки и их иконки в мобильной версии */
-@media (max-width: 768px) {
-  .arrow {
-    width: 40px;
-    height: 40px;
-    top: auto;
-    bottom: 80px;
-    transform: none;
-  }
-
-  .arrow img {
-    width: 100%;
-    height: 100%;
-  }
-}
-
-/* Индикаторы (dot-прогресс) */
 .video-dots {
   position: absolute;
-  bottom: 20px;
+  bottom: 50px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -127,3 +109,40 @@ body {
   to { width: 100%; }
 }
 
+.video-title {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  color: white;
+  opacity: 0;
+  animation: fadeSlide 1.5s ease forwards;
+  z-index: 5;
+}
+
+@keyframes fadeSlide {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (max-width: 768px) {
+  .arrow {
+    width: 30px;
+    height: 30px;
+    top: auto;
+    bottom: 80px;
+    transform: none;
+  }
+
+  .video-title {
+    font-size: 18px;
+    bottom: 60px;
+  }
+}
