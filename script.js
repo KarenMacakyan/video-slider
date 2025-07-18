@@ -7,43 +7,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let current = 0;
   const total = videos.length;
+  const dots = [];
 
   function showVideo(index) {
-    // Останавливаем все видео
-    videos.forEach(v => {
+    // Остановить все видео
+    videos.forEach((v, i) => {
       v.pause();
       v.currentTime = 0;
     });
 
-    // Смещаем контейнер
+    // Сменить видео
     container.style.transform = `translateX(-${index * 100}vw)`;
-
-    // Воспроизводим выбранное
     videos[index].play();
 
-    // Обновляем активную точку
-    updateDots();
-  }
-
-  function updateDots() {
-    const dots = document.querySelectorAll('.dot');
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === current);
+    // Сбросить все индикаторы
+    dots.forEach(dot => {
+      dot.classList.remove('active');
+      dot.style.setProperty('--duration', '0s');
     });
+
+    // Установить активную точку и duration
+    const duration = videos[index].duration || 5;
+    dots[index].classList.add('active');
+    dots[index].style.setProperty('--duration', `${duration}s`);
+
+    // Автосмена по окончании
+    clearTimeout(showVideo.timeout);
+    showVideo.timeout = setTimeout(() => {
+      current = (current + 1) % total;
+      showVideo(current);
+    }, duration * 1000);
   }
 
-  // Добавляем точки
-  for (let i = 0; i < total; i++) {
+  // Создать индикаторы
+  videos.forEach((_, i) => {
     const dot = document.createElement('div');
     dot.classList.add('dot');
-    if (i === current) dot.classList.add('active');
     dot.addEventListener('click', () => {
       current = i;
       showVideo(current);
     });
     dotsContainer.appendChild(dot);
-  }
+    dots.push(dot);
+  });
 
+  // Стрелки
   prevBtn.addEventListener('click', () => {
     current = (current - 1 + total) % total;
     showVideo(current);
@@ -54,6 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
     showVideo(current);
   });
 
-  // Воспроизведение первого видео
-  showVideo(current);
+  // Запуск первого
+  videos[0].addEventListener('loadedmetadata', () => {
+    showVideo(0);
+  });
 });
