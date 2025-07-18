@@ -4,34 +4,36 @@ document.addEventListener('DOMContentLoaded', () => {
   const prevBtn = document.querySelector('.prev');
   const nextBtn = document.querySelector('.next');
   const dotsContainer = document.getElementById('video-dots');
+  const titleEl = document.getElementById('videoTitle');
+  const titles = ["Видео 1", "Видео 2", "Видео 3", "Видео 4", "Видео 5"];
 
   let current = 0;
   const total = videos.length;
   const dots = [];
 
   function showVideo(index) {
-    // Остановить все видео
-    videos.forEach((v, i) => {
+    videos.forEach((v) => {
       v.pause();
       v.currentTime = 0;
     });
 
-    // Сменить видео
     container.style.transform = `translateX(-${index * 100}vw)`;
     videos[index].play();
 
-    // Сбросить все индикаторы
     dots.forEach(dot => {
       dot.classList.remove('active');
       dot.style.setProperty('--duration', '0s');
     });
 
-    // Установить активную точку и duration
     const duration = videos[index].duration || 5;
     dots[index].classList.add('active');
     dots[index].style.setProperty('--duration', `${duration}s`);
 
-    // Автосмена по окончании
+    titleEl.textContent = titles[index];
+    titleEl.style.animation = 'none';
+    void titleEl.offsetWidth;
+    titleEl.style.animation = 'fadeSlide 1.5s ease forwards';
+
     clearTimeout(showVideo.timeout);
     showVideo.timeout = setTimeout(() => {
       current = (current + 1) % total;
@@ -39,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, duration * 1000);
   }
 
-  // Создать индикаторы
   videos.forEach((_, i) => {
     const dot = document.createElement('div');
     dot.classList.add('dot');
@@ -51,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
     dots.push(dot);
   });
 
-  // Стрелки
   prevBtn.addEventListener('click', () => {
     current = (current - 1 + total) % total;
     showVideo(current);
@@ -62,7 +62,25 @@ document.addEventListener('DOMContentLoaded', () => {
     showVideo(current);
   });
 
-  // Запуск первого
+  // свайп
+  let startX = 0;
+  const slider = document.getElementById("slider");
+
+  slider.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+  });
+
+  slider.addEventListener("touchend", (e) => {
+    const endX = e.changedTouches[0].clientX;
+    if (startX - endX > 50) {
+      current = (current + 1) % total;
+      showVideo(current);
+    } else if (endX - startX > 50) {
+      current = (current - 1 + total) % total;
+      showVideo(current);
+    }
+  });
+
   videos[0].addEventListener('loadedmetadata', () => {
     showVideo(0);
   });
