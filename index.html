@@ -16,10 +16,11 @@
     window.addEventListener('resize', setVH);
   </script>
 
-  
-
   <div class="video-slider">
-    <button class="arrow prev">←</button>
+    <!-- Кнопка ВЛЕВО -->
+    <button class="arrow prev">
+      <img src="icons8/left.png" alt="Назад" />
+    </button>
 
     <div class="video-container">
       <video src="videos/video1.mp4" preload="auto" autoplay muted playsinline></video>
@@ -29,7 +30,10 @@
       <video src="videos/video5.mp4" preload="none" muted playsinline></video>
     </div>
 
-    <button class="arrow next">→</button>
+    <!-- Кнопка ВПРАВО -->
+    <button class="arrow next">
+      <img src="icons8/right.png" alt="Вперёд" />
+    </button>
 
     <div class="video-dots" id="video-dots"></div>
   </div>
